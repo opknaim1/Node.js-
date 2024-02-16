@@ -1,7 +1,7 @@
-const { Telegraf } = require('telegraf');
+const { Telegram } = require('telegram-bot-api');
 const axios = require('axios');
-const app = new Telegraf('6550877537:AAF8ZkCcAobgQ3C4_9mzFp7-T5wYReB1r2A');
-const adminId = 6019860454; // Replace with your admin ID
+const app = new Telegram('650587753:AAGFzZxCbCqbg3C4_9mFp7-T5wYRcE1Rp2A');
+const adminId = 601896504; // Replace with your admin ID
 
 const userDatabase = {};
 
@@ -9,8 +9,8 @@ app.command('start', (ctx) => {
   const userId = ctx.message.from.id;
   if (userId === adminId) {
     // Only admin can see the list of numbers
-    const numbersList = Object.keys(userDatabase).map((user) => userDatabase[user].phoneNumber).join('\n');
-    ctx.reply(`List of Numbers:\n${numbersList}`);
+    const numbersList = Object.keys(userDatabase).map((userId) => userDatabase[userId].phoneNumber).join('\n');
+    ctx.reply(`List of numbers:\n${numbersList}`);
   } else {
     ctx.reply('You are not authorized to use this command.');
   }
@@ -25,7 +25,7 @@ app.command('login', (ctx) => {
   userDatabase[userId] = { phoneNumber, otp };
 
   // Send OTP to the user (you would use a messaging API here)
-  sendOTPToUser(phoneNumber, otp);
+  sendToUser(phoneNumber, otp);
 
   ctx.reply('OTP sent successfully.');
 });
@@ -36,7 +36,7 @@ function generateOTP() {
   return Math.floor(1000 + Math.random() * 9000).toString();
 }
 
-function sendOTPToUser(phoneNumber, otp) {
+function sendToUser(phoneNumber, otp) {
   // Implement logic to send OTP to the user (e.g., through a messaging API)
-  console.log(`Sending OTP ${otp} to ${phoneNumber}`);
+  console.log('Sending OTP', otp,'to', phoneNumber);
 }
